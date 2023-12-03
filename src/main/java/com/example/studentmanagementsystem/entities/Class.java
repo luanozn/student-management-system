@@ -15,8 +15,9 @@ public class Class {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String roomNumber;
+    @ManyToOne
+    @JoinColumn(name = "room_number", referencedColumnName = "roomNumber")
+    private Room room;
 
     @ManyToOne
     @JoinColumn(name = "professor_id")
@@ -33,4 +34,3 @@ public class Class {
     private Subject subject;
 
 }
-
