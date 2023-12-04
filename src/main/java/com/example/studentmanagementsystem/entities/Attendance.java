@@ -22,7 +22,7 @@ public class Attendance {
 
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false)
-    private Class classEntity;
+    private Turma classEntity;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
