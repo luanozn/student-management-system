@@ -1,6 +1,7 @@
 package com.example.studentmanagementsystem.controllers;
 
 import com.example.studentmanagementsystem.entities.Class;
+import com.example.studentmanagementsystem.services.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
