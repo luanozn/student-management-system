@@ -2,6 +2,7 @@ package com.example.studentmanagementsystem.controllers;
 
 import com.example.studentmanagementsystem.entities.Subject;
 import com.example.studentmanagementsystem.services.SubjectService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,7 +60,8 @@ public class SubjectController {
 
     @GetMapping("/{id}/students")
     public ResponseEntity<List<String>> getStudentsBySubject(@PathVariable UUID id) {
-        List<String> students = subjectService.getStudentsBySubject(id);
+        Map<UUID, List<String>> studentsBySubject = subjectService.getStudentsBySubject();
+        var students = studentsBySubject.get(id);
         return ResponseEntity.ok(students);
     }
 }

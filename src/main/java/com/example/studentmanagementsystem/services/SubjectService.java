@@ -1,6 +1,7 @@
 package com.example.studentmanagementsystem.services;
 
 import com.example.studentmanagementsystem.entities.Subject;
+import com.example.studentmanagementsystem.entities.User;
 import com.example.studentmanagementsystem.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,16 +53,16 @@ public class SubjectService {
         return false;
     }
 
-    public Map<Subject, List<String>> getStudentsBySubject() {
+    public Map<UUID, List<String>> getStudentsBySubject() {
         // Obter todas as disciplinas
         List<Subject> subjects = getAllSubjects();
 
         // Mapear as disciplinas para a lista de alunos matriculados
         return subjects.stream()
                 .collect(Collectors.toMap(
-                        subject -> subject,
+                        Subject::getId,
                         subject -> subject.getStudents().stream()
-                                .map(student -> student.getName())
+                                .map(User::getName)
                                 .collect(Collectors.toList())
                 ));
     }
