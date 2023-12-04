@@ -6,7 +6,9 @@ import static com.example.studentmanagementsystem.entities.enums.UserRole.PROFES
 import com.example.studentmanagementsystem.entities.enums.UserRole;
 import java.util.Collection;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -20,6 +22,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable, UserDetails {
 
     @Id
@@ -27,22 +31,26 @@ public class User implements Serializable, UserDetails {
     private UUID id;
 
     @Column (nullable = false, unique = true, length = 16)
-    private Long registration;
+    private String registration;
 
     @Column (nullable = false, length = 50)
     private String name;
 
     @Column (nullable = false, unique = true, length = 255)
-    private Long email;
+    private String email;
 
-    @Column (nullable = false, unique = true)
-    private String login;
-
-    @Column (nullable = false, unique = true, length = 30)
+    @Column (nullable = false, unique = true, length = 255)
     private String password;
 
     private UserRole role;
 
+    public User(String registration, String password, String email, String name, UserRole role) {
+        this.registration = registration;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,7 +61,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return registration;
     }
 
     @Override
