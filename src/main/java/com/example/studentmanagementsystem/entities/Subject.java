@@ -1,8 +1,8 @@
 package com.example.studentmanagementsystem.entities;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -21,6 +21,7 @@ public class Subject {
     @Column(length = 255)
     private String description;
 
-
+    @OneToMany
+    private List<Student> students;
 }
 

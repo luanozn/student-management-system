@@ -1,5 +1,6 @@
 package com.example.studentmanagementsystem.entities;
 
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,9 @@ public class Room {
 
     @Column(nullable = false)
     private boolean availability;
+
+    @Column(nullable = false)
+    private int roomNumber;
 
 }
 

@@ -1,5 +1,6 @@
 package com.example.studentmanagementsystem.entities;
 
+import com.example.studentmanagementsystem.entities.enums.Specialization;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +18,8 @@ public class Professor extends User implements Serializable {
 
     @Column (nullable = false,  length = 30)
     private String postgraduate;
+
+    @Column(nullable = false)
+    private Specialization specialization;
 
 }
