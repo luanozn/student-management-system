@@ -1,8 +1,15 @@
 package com.example.studentmanagementsystem.controllers;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.studentmanagementsystem.entities.Professor;
+import com.example.studentmanagementsystem.services.ProfessorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/")
@@ -49,5 +56,4 @@ public class ProfessorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 }

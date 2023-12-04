@@ -18,7 +18,7 @@ public class Activity {
 
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false)
-    private Class classEntity;
+    private Turma classEntity;
 
     @Column(nullable = false)
     private Date date;
