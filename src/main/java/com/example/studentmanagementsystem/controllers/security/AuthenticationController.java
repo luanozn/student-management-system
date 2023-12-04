@@ -3,6 +3,8 @@ package com.example.studentmanagementsystem.controllers.security;
 import com.example.studentmanagementsystem.entities.User;
 import com.example.studentmanagementsystem.entities.dto.AuthenticationDTO;
 import com.example.studentmanagementsystem.entities.dto.RegisterDTO;
+import com.example.studentmanagementsystem.entities.dto.LoginResponseDTO;
+import com.example.studentmanagementsystem.infra.security.TokenService;
 import com.example.studentmanagementsystem.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,17 @@ public class AuthenticationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody AuthenticationDTO data){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.getRegistration(), data.getPassword());
         var auth = this.authenticator.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok().body(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
