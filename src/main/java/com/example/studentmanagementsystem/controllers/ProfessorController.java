@@ -2,6 +2,8 @@ package com.example.studentmanagementsystem.controllers;
 
 import com.example.studentmanagementsystem.entities.Professor;
 import com.example.studentmanagementsystem.services.ProfessorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,18 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/professor")
+@Tag(name = "professor")
 public class ProfessorController {
 
     @Autowired
     private ProfessorService professorService;
 
-    // Endpoint para listar todos os professores
+    @Operation(summary = "Endpoint to get all teachers", method = "GET")
     @GetMapping
     public ResponseEntity<List<Professor>> getAllProfessors() {
         List<Professor> professors = professorService.getAllProfessors();
         return new ResponseEntity<>(professors, HttpStatus.OK);
     }
 
+    @Operation(summary = "Endpoint to get a teacher by id", method = "GET")
     @GetMapping("/{professorId}")
     public ResponseEntity<Professor> getProfessorById(@PathVariable UUID professorId) {
         Optional<Professor> professor = professorService.getProfessorById(professorId);
@@ -38,14 +42,14 @@ public class ProfessorController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Endpoint para adicionar um novo professor
+    @Operation(summary = "Endpoint insert a new teacher", method = "POST")
     @PostMapping
     public ResponseEntity<Professor> addProfessor(@RequestBody Professor professor) {
         Professor newProfessor = professorService.addProfessor(professor);
         return new ResponseEntity<>(newProfessor, HttpStatus.CREATED);
     }
 
-    // Endpoint para editar um professor existente
+    @Operation(summary = "Endpoint to edit a teacher", method = "GET")
     @PutMapping("/{professorId}")
     public ResponseEntity<Professor> updateProfessor(@PathVariable UUID professorId, @RequestBody Professor professor) {
         Optional<Professor> updatedProfessor = professorService.updateProfessor(professorId, professor);
@@ -53,7 +57,7 @@ public class ProfessorController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Endpoint para deletar um professor por ID
+    @Operation(summary = "Endpoint to delete a teacher", method = "DELETE")
     @DeleteMapping("/{professorId}")
     public ResponseEntity<Void> deleteProfessor(@PathVariable UUID professorId) {
         if (professorService.deleteProfessor(professorId)) {
