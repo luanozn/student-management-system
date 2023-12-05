@@ -2,6 +2,8 @@ package com.example.studentmanagementsystem.controllers;
 
 import com.example.studentmanagementsystem.entities.Student;
 import com.example.studentmanagementsystem.services.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +15,14 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/student")
+@Tag(name = "student")
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
     // Endpoint para listar todos os estudantes
+    @Operation(summary = "Endpoint to get all students", method = "GET")
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         List<Student> students = studentService.getAllStudents();
@@ -26,6 +30,7 @@ public class StudentController {
     }
 
     // Endpoint para obter um estudante por ID
+    @Operation(summary = "Endpoint to get a student by id", method = "GET")
     @GetMapping("/{studentId}")
     public ResponseEntity<Student> getStudentById(@PathVariable UUID studentId) {
         Optional<Student> student = studentService.getStudentById(studentId);
@@ -34,13 +39,14 @@ public class StudentController {
     }
 
     // Endpoint para adicionar um novo estudante
+    @Operation(summary = "Endpoint to add a new Student", method = "POST")
     @PostMapping
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         Student newStudent = studentService.addStudent(student);
         return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
     }
 
-    // Endpoint para editar um estudante existente
+    @Operation(summary = "Endpoint to update a student", method = "PUT")
     @PutMapping("/{studentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable UUID studentId, @RequestBody Student student) {
         Optional<Student> updatedStudent = studentService.updateStudent(studentId, student);
@@ -48,7 +54,7 @@ public class StudentController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Endpoint para deletar um estudante por ID
+    @Operation(summary = "Endpoint to delete a student", method = "DELETE")
     @DeleteMapping("/{studentId}")
     public ResponseEntity<Void> deleteStudent(@PathVariable UUID studentId) {
         if (studentService.deleteStudent(studentId)) {
